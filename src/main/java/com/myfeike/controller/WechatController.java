@@ -12,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 /** 
  * @author  izerui.com
  * @version createtime：2013年10月11日 下午2:00:19 
@@ -20,10 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WechatController {
 	
-	/**
-	 * get进来根路径
-	 */
 	@RequestMapping(value="/",method=RequestMethod.GET)
+	public String index() {
+		return "index.jsp";
+	}
+	
+	@RequestMapping(value="/api",method=RequestMethod.GET)
 	public String api(ModelMap modelMap,
 			HttpServletResponse response,
 			HttpServletRequest request) {
