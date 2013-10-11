@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,27 +20,24 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class WechatController {
 	
-	@RequestMapping(value="/",method=RequestMethod.GET)
-	public String index() {
-		return "index.jsp";
-	}
-	
 	/**
 	 * get进来根路径
 	 */
-	@RequestMapping(value = "/validate", method = RequestMethod.GET)
-	public String validateWeiXinAPI(@RequestParam("signature") String signature,
-			@RequestParam("timestamp") String timestamp,
-			@RequestParam("nonce") String nonce,
-			@RequestParam("echostr") String echostr,
+	@RequestMapping(value="/",method=RequestMethod.GET)
+	public String api(ModelMap modelMap,
 			HttpServletResponse response,
 			HttpServletRequest request) {
-	    String token = "weixin_myfeike"; // Note: 改成你自己的Token  
-	    if (signature == null || timestamp == null || nonce == null  
+	    String token = "weixin_myfeike"; // Note: 改成你自己的Token 
+	    String signature = request.getParameter("signature");
+	    String timestamp = request.getParameter("timestamp");
+	    String nonce = request.getParameter("nonce");
+	    String echostr = request.getParameter("echostr");
+	    if (signature == null ||timestamp == null || nonce == null  
 	            || echostr == null)  
 	    {  
 	        return "error.jsp";  
 	    }  
+	    
 	    // 1. 将token、timestamp、nonce三个参数进行字典序排序  
 	    String[] strArr = new String[] { token, timestamp, nonce };  
 	    java.util.Arrays.sort(strArr);  
